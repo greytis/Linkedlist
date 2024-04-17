@@ -7,38 +7,31 @@
 
 using namespace std;
 
-template <typename T>
-struct Node {
-    Node(): next ( NULL) { }
-    Node(const T& t): val (t), next(NULL) { }
-    T val;
-    Node *next;
-};
-
 
 
 template <typename T>
 class List {
 
-    //private: 
+    private:
+        struct Node {
+            T val;
+            Node *next;
+        };
+
+        Node *first;
+
+        friend class Iterator;
+
     public:
-    Node<T> *first;
 
-    friend class Iterator;
-
-    public:
-
-        class Iterator {
+    class Iterator {
         private:
         friend class List< T >;
-        Node<T> *current;
+        Node *current;
 
         public:
-        /*Iterator() {
-            Node<T>* current;
-            current = NULL;
-        }*/
-        Iterator (Node<T> *nd) : current (nd) { }
+        Iterator () : current (NULL) { }
+        Iterator (Node *nd) : current (nd) { }
 
         bool operator==(const Iterator& other) const {
             if (this == &other) {
@@ -54,9 +47,6 @@ class List {
         T operator*() const {
             if (current) {
             return current->val;
-            }
-            else {
-                printf("The end of list is reached.\n\n");
             }
             return T();
         }
@@ -76,17 +66,33 @@ class List {
     
     List& operator=(const List &other);
 
+    bool isempty() const;
+
     void append_end(const T& t);
     void append_begin(const T& t);
-    Node* append_i(const T& t, int k);
+    void append_i(const T& t, int k);
+
+    void remove_begin();
+    void remove_i(int k);
+    void remove_end();
+
+    bool find(T& t) const;
+
+    T pop_begin() const;
+    T pop_i(const int k) const;
+
 
     Iterator begin() const;
     Iterator end() const;
 
+    size_t size() const;
+
     void clear();
-    void output();
 
 };
+
+
+
 
 
 

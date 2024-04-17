@@ -1,0 +1,2 @@
+g++ main.cpp list.cpp -o prog
+./prog
